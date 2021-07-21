@@ -61,6 +61,34 @@ const Navbar = ({toggle}) => {
             <NavMenu>
               <NavItem>
                 <NavLinks
+                  to="whoweare"
+                  smooth={true}
+                  duration={500}
+                  spy={true}
+                  exact="true"
+                  offset={-80}
+                >
+                  The mentors
+                </NavLinks>
+              </NavItem>
+            </NavMenu>
+            <NavMenu>
+              <NavItem>
+                <NavLinks
+                  to="sheprog"
+                  smooth={true}
+                  duration={500}
+                  spy={true}
+                  exact="true"
+                  offset={-80}
+                >
+                  SheCanCode Program
+                </NavLinks>
+              </NavItem>
+            </NavMenu>
+            <NavMenu>
+              <NavItem>
+                <NavLinks
                   to="services"
                   smooth={true}
                   duration={500}
@@ -68,7 +96,7 @@ const Navbar = ({toggle}) => {
                   exact="true"
                   offset={-80}
                 >
-                  Pricing
+                  Courses
                 </NavLinks>
               </NavItem>
             </NavMenu>

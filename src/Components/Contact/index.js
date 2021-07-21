@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import {useHistory} from 'react-router-dom'
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
@@ -42,8 +43,10 @@ const schema = yup.object().shape({
 });
 
 const Contact = () => {
+  const history = useHistory()
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -61,10 +64,12 @@ const Contact = () => {
       })
       .then(() => {
         alert("message has been submitted");
-      })
+      }) 
       .catch((error) => {
         alert(error.message);
       });
+      reset()
+      history.push('/')
   };
 
   return (
