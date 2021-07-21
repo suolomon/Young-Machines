@@ -34,18 +34,22 @@ const HeroSection = () => {
               typewriter
                 .typeString("We teach you to solve")
                 .pauseFor(2000)
-                .deleteChars(5);
-              typewriter.typeString("create").pauseFor(2000).start();
+                .deleteChars(5)
+              typewriter.typeString("develope").pauseFor(2000)
+              .deleteChars(11)
+              .typeString('the future').pauseFor(1000).start()
             }}
             options={{
               autoStart: true,
-              loop: true,
+              // loop: true, 
+      
             }}
+          
           />
         </HeroH1>
         <HeroP>
-          Join our robust community of software engineers and scientists
-          to kickstart your career in software development.
+          Our robust community gives you the skill sets you need in
+          software development. 
         </HeroP>
         <HeroBtnWrapper>
           <StartButton
