@@ -63,6 +63,7 @@ export const CardLayer2 = styled.div`
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   position: relative;
   overflow: hidden;
+
 `;
 export const MentorCard = styled.div`
 
@@ -97,6 +98,7 @@ export const MentorContents = styled.div`
 `;
 export const MentorSpan = styled.div`
   font-size: 15px;
+  font-weight: 100;
   color: #fff;
   margin-top: 5px;
   transition: 0.5s;
@@ -115,8 +117,8 @@ export const SocialIconsContainer = styled.div`
 export const SocialIcons = styled.a`
   list-style: none;
   margin: 4px;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
