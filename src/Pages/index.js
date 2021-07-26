@@ -8,8 +8,9 @@ import {
   Services,
   Footer,
 } from "../Components";
-import { homeObjOne } from "../Components/InfoSection/Data";
-import { homeObjTwo } from "../Components/InfoSection/Data";
+import { homeObj } from "../Components/InfoSection/Data";
+import WhatWeDo from "../Components/WhatWeDoSection";
+import { AboutObj } from "../Components/WhatWeDoSection/Data";
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,9 +24,9 @@ const Home = () => {
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <Navbar toggle={toggle} />
       <HeroSection />
-      <InfoSection {...homeObjOne} />
+      <WhatWeDo {...AboutObj} />
       <MentorSection />
-      <InfoSection {...homeObjTwo} />
+      <InfoSection {...homeObj} />
       <Services />
       <Footer />
     </>

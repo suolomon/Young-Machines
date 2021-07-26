@@ -15,7 +15,6 @@ import {
   TextAreaLabel,
   FormContent,
   Form,
-  HTMLLabels,
   SelectTag,
   FormH2,
   FormLabel,
@@ -258,7 +257,6 @@ const Contact = ({ completeFormStep, goToPreviousStep, formStep }) => {
                     What course are you interested in?
                     <RequiredTag>*</RequiredTag>
                   </FormLabel>
-                  <HTMLLabels>
                     <SelectTag
                       {...register("course", {
                         required: "This is a required field",
@@ -271,8 +269,6 @@ const Contact = ({ completeFormStep, goToPreviousStep, formStep }) => {
                       <option value="js">JavaScript</option>
                       <option value="fullCourse">FullCourse</option>
                     </SelectTag>
-                  </HTMLLabels>
-
                   <ErrorTag>
                     <ErrorMessage errors={errors} name="course" />
                   </ErrorTag>

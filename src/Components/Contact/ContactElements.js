@@ -128,7 +128,6 @@ export const Form = styled.form`
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(5px);
   max-width: 600px;
-  /* height: auto; */
   position: absolute;
   width: 85%;
   z-index: 1;
@@ -147,12 +146,6 @@ export const Form = styled.form`
   }
 `;
 export const FormH1 = styled.h1`
-  /* margin-bottom: 40px; */
-  margin-top: 0;
-  /* color: #fff;
-  font-size: 20px;
-  font-weight: 400;
-  text-align: center; */
 `;
 
 export const FormH2 = styled.h2`
@@ -206,9 +199,6 @@ export const FormInput = styled.input`
   outline: none;
 `;
 
-export const HTMLLabels = styled.div`
- /* width: 100%; */
-`
 export  const SelectTag = styled.select`
   width: 100%;
   border: none;
@@ -259,7 +249,6 @@ export const Text = styled.span`
   font-size: 14px;
 `;
 export const FormP = styled.p`
- /* margin-bottom: 2px; */
 `
 
 export const ErrorTag = styled.p`
