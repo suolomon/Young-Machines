@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import {useHistory} from 'react-router-dom'
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useHistory } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
 import {
   Container,
@@ -12,64 +10,83 @@ import {
   Img,
   Icon,
   IconLogo,
-  IconLogldiv,
+  NavContact,
+  NavContactContainer,
+  TextAreaLabel,
   FormContent,
   Form,
-  FormH1,
+  SelectTag,
+  FormH2,
   FormLabel,
   FormInput,
   FormButton,
-  Text,
   ErrorTag,
   RequiredTag,
+  FormSection,
+  Section,
+  FormP,
+  IconButton,
 } from "./ContactElements";
 import "../../App.css";
-import Image from "../../Images/blackdust.jpg";
+import Image from "../../Images/women_on_laptops_mv.jpg";
 import { db } from "../../firebase";
 
-const schema = yup.object().shape({
-  fullName: yup.string().required("Please enter your full name"),
-  email: yup.string().required("Please enter your email"),
-  select: yup
-    .string()
-    .oneOf(["webdev", "py", "js", "fc"])
-    .required("Please choose one of our services"),
-  message: yup.string().required("Message can not be left blank"),
-  select2: yup
-    .string()
-    .oneOf(["male", "female"])
-    .required("Please choose one of our services"),
-  message: yup.string().required("Message can not be left blank"),
-});
-
-const Contact = () => {
-  const history = useHistory()
+const Contact = ({ completeFormStep, goToPreviousStep, formStep }) => {
+  const history = useHistory();
   const {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
-    resolver: yupResolver(schema),
+    mode: "all",
   });
+  const MAX_STEPS = 3;
+
+  const renderButton = () => {
+    if (formStep > 2) {
+      return undefined;
+    } else if (formStep == 2) {
+      return (
+        <FormButton disabled={!isValid} type="submit">
+          Register
+        </FormButton>
+      );
+    } else {
+      return (
+        <FormButton
+          disabled={!isValid}
+          onClick={completeFormStep}
+          type="button"
+        >
+          Next Step
+        </FormButton>
+      );
+    }
+  };
 
   const onSubmit = (data) => {
     db.collection("contacts")
       .add({
         fullName: data.fullName,
         email: data.email,
-        select: data.select,
-        select2: data.select2,
+        course: data.course,
+        gender: data.gender,
         message: data.message,
+        yourAge: data.yourAge,
+        parentsName: data.parentsName,
+        parentsContact: data.parentsContact,
+        parentsEmail: data.parentsEmail,
       })
       .then(() => {
-        alert("message has been submitted");
-      }) 
+        alert("Your message has been submitted");
+      })
+
       .catch((error) => {
         alert(error.message);
       });
-      reset()
-      history.push('/')
+    reset();
+    // history.push("/");
   };
 
   return (
@@ -80,80 +97,199 @@ const Contact = () => {
             <Img src={Image} />
           </ImageBg>
         </FormBg>
+
         <FormWrap>
+          <Icon to="/">
+            <NavContact>
+              <NavContactContainer>
+                <IconLogo>Young+Machines</IconLogo>
+              </NavContactContainer>
+            </NavContact>
+          </Icon>
           <FormContent>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <Icon to="/">
-                <IconLogldiv>
-                  <IconLogo>Y+M</IconLogo>
-                </IconLogldiv>
-              </Icon>
-              <FormH1>Fill in your request details below</FormH1>
-              <FormLabel htmlFor="fullName">
-                Full Name <RequiredTag>*</RequiredTag>
-              </FormLabel>
-              <FormInput
-                type="text"
-                name="fullName"
-                {...register("fullName")}
-              />
-              <ErrorTag>
-                <ErrorMessage errors={errors} name="fullName" />
-              </ErrorTag>
+              {formStep < MAX_STEPS && (
+                <FormSection>
+                  {formStep > 0 && (
+                    <IconButton onClick={goToPreviousStep}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M15 19l-7-7 7-7"
+                        />
+                      </svg>
+                    </IconButton>
+                  )}
+                  <FormP>
+                    Step {formStep + 1} of {MAX_STEPS}
+                  </FormP>
+                </FormSection>
+              )}
+              {formStep === 0 && (
+                <Section>
+                  <FormH2>Personal Info</FormH2>
+                  <FormLabel htmlFor="fullName">
+                    Full Name <RequiredTag>*</RequiredTag>
+                  </FormLabel>
+                  <FormInput
+                    type="text"
+                    name="fullName"
+                    {...register("fullName", {
+                      required: "Please fill in your full name",
+                    })}
+                  />
+                  <ErrorTag>
+                    <ErrorMessage errors={errors} name="fullName" />
+                  </ErrorTag>
 
-              <FormLabel htmlFor="email">
-                Email <RequiredTag>*</RequiredTag>
-              </FormLabel>
-              <FormInput
-                type="email"
-                name="email"
-                placeholder="example@email.com"
-                {...register("email")}
-              />
-              <ErrorTag>
-                <ErrorMessage errors={errors} name="email" />
-              </ErrorTag>
-              <FormLabel htmlFor="gender">
-                Gender
-                <RequiredTag>*</RequiredTag>
-              </FormLabel>
-              <select {...register("select2")}>
-                <option>Select ...</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-              <ErrorTag>
-                <ErrorMessage errors={errors} name="select2" />
-              </ErrorTag>
-              <FormLabel htmlFor="courses">
-                What course are you interested in?
-                <RequiredTag>*</RequiredTag>
-              </FormLabel>
-              <select {...register("select")}>
-                <option>Select ...</option>
-                <option value="webdev">Web Developement</option>
-                <option value="py">Python</option>
-                <option value="js">JavaScript</option>
-                <option value="fc">FullCourse</option>
-                
-              </select>
-              <ErrorTag>
-                <ErrorMessage errors={errors} name="select" />
-              </ErrorTag>
-              <FormLabel htmlFor="message">
-                What do you expect to learn ? (You can be brief 😊)
-                <RequiredTag>*</RequiredTag>
-              </FormLabel>
-              <textarea
-                name="message"
-                placeholder="Tell us more about your request like bugdets, questions and more"
-                {...register("message")}
-              />
-              <ErrorTag>
-                <ErrorMessage errors={errors} name="message" />
-              </ErrorTag>
-              <FormButton type="submit">Submit Request</FormButton>
-              <Text>We respond within 24 hours😉</Text>
+                  <FormLabel htmlFor="email">
+                    Email <RequiredTag>*</RequiredTag>
+                  </FormLabel>
+                  <FormInput
+                    type="email"
+                    name="email"
+                    placeholder="example@email.com"
+                    {...register("email", {
+                      required: "Please fill in your email",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "invalid email address",
+                      },
+                    })}
+                  />
+                  <ErrorTag>
+                    <ErrorMessage errors={errors} name="email" />
+                  </ErrorTag>
+
+                  <FormLabel htmlFor="gender">
+                    Gender
+                    <RequiredTag>*</RequiredTag>
+                  </FormLabel>
+                  <SelectTag
+                    {...register("gender", {
+                      required: "Please select your gender",
+                    })}
+                  >
+                    <option>Select ...</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </SelectTag>
+                  <ErrorTag>
+                    <ErrorMessage errors={errors} name="gender" />
+                  </ErrorTag>
+
+                  <FormLabel htmlFor="age">
+                    Your Age <RequiredTag>*</RequiredTag>
+                  </FormLabel>
+                  <FormInput
+                    type="number"
+                    name="yourAge"
+                    placeholder="You must be 10+ years"
+                    {...register("yourAge", {
+                      required: "Please fill in your age",
+                      pattern: {
+                        value: /\d[0-9]{1}/,
+                        message: "You must be 10 years and above",
+                      },
+                    })}
+                  />
+                  <ErrorTag>
+                    <ErrorMessage errors={errors} name="yourAge" />
+                  </ErrorTag>
+                </Section>
+              )}
+
+              {formStep === 1 && (
+                <Section>
+                  <FormH2>Parent's info</FormH2>
+                  <FormLabel htmlFor="parentsName">
+                    Name of Parent <RequiredTag>*</RequiredTag>
+                  </FormLabel>
+                  <FormInput
+                    type="text"
+                    name="parentsName"
+                    placeholder=""
+                    {...register("parentsName", {
+                      required: "This is a required field",
+                    })}
+                  />
+                  <ErrorTag>
+                    <ErrorMessage errors={errors} name="parentsName" />
+                  </ErrorTag>
+                  <FormLabel htmlFor="parentsContact">
+                    Parent's Contact <RequiredTag>*</RequiredTag>
+                  </FormLabel>
+                  <FormInput
+                    type="number"
+                    name="parentsContact"
+                    placeholder=""
+                    {...register("parentsContact", {
+                      required: "This is a required field",
+                    })}
+                  />
+                  <ErrorTag>
+                    <ErrorMessage errors={errors} name="parentsContact" />
+                  </ErrorTag>
+                  <FormLabel htmlFor="parentsEmail">
+                    Parent's Email (Optional)
+                  </FormLabel>
+                  <FormInput
+                    type="email"
+                    name="parentsEmail"
+                    placeholder=""
+                    {...register("parentsEmail")}
+                  />
+                </Section>
+              )}
+
+              {formStep === 2 && (
+                <Section>
+                  <FormH2>Course Details</FormH2>
+                  <FormLabel htmlFor="courses">
+                    What course are you interested in?
+                    <RequiredTag>*</RequiredTag>
+                  </FormLabel>
+                    <SelectTag
+                      {...register("course", {
+                        required: "This is a required field",
+                      })}
+                    >
+                      <option>Select ...</option>
+                      <option value="webdev">Web Developement</option>
+                      <option value="c">C</option>
+                      <option value="python">Python</option>
+                      <option value="js">JavaScript</option>
+                      <option value="fullCourse">FullCourse</option>
+                    </SelectTag>
+                  <ErrorTag>
+                    <ErrorMessage errors={errors} name="course" />
+                  </ErrorTag>
+
+                  <FormLabel htmlFor="message">
+                    What do you expect to learn ? (You can be brief 😊)
+                    <RequiredTag>*</RequiredTag>
+                  </FormLabel>
+                  <TextAreaLabel
+                    name="message"
+                    placeholder="What do you expect to learn in your selected option?"
+                    {...register("message", {
+                      required: "This cannot be left blank",
+                    })}
+                  />
+                  <ErrorTag>
+                    <ErrorMessage errors={errors} name="message" />
+                  </ErrorTag>
+                </Section>
+              )}
+              {renderButton()}
             </Form>
           </FormContent>
         </FormWrap>
@@ -163,4 +299,3 @@ const Contact = () => {
 };
 
 export default Contact;
-

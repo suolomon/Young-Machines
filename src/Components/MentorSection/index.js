@@ -49,18 +49,33 @@ const MentorSection = () => {
               <MentorContents>
                 <MentorInfo>
                   <MentorH2>
-                    Solomon
+                    Solomon Talemwa
                     <br />
                     <MentorSpan>Js + Web instructor</MentorSpan>
                   </MentorH2>
                   <SocialIconsContainer>
-                    <SocialIcons href="https://solo-stack.web.app/">
+                    <SocialIcons
+                      onClick={() =>
+                        window.open("https://solo-stack.web.app", "_blank")
+                      }
+                    >
                       <FaGlobe />
                     </SocialIcons>
-                    <SocialIcons href="https://www.linkedin.com/in/solomon-talemwa-3b823120a/">
+                    <SocialIcons
+                      onClick={() =>
+                        window.open(
+                          "https://www.linkedin.com/in/solomon-talemwa-3b823120a/",
+                          "_blank"
+                        )
+                      }
+                    >
                       <FaLinkedinIn />
                     </SocialIcons>
-                    <SocialIcons href="https://twitter.com/tmsolomon11">
+                    <SocialIcons
+                      onClick={() =>
+                        window.open("https://twitter.com/tmsolomon11", "_blank")
+                      }
+                    >
                       <FaTwitter />
                     </SocialIcons>
                   </SocialIconsContainer>
@@ -116,8 +131,22 @@ const MentorSection = () => {
                     <MentorSpan>Python + Web Instructor</MentorSpan>
                   </MentorH2>
                   <SocialIconsContainer>
-                    <SocialIcons href="https://www.facebook.com/mugisha.derrick.3">
+                    <SocialIcons
+                      onClick={() =>
+                        window.open(
+                          "https://www.facebook.com/mugisha.derrick.3",
+                          "_blank"
+                        )
+                      }
+                    >
                       <FaFacebookSquare />
+                    </SocialIcons>
+                    <SocialIcons
+                      onClick={() =>
+                        (window.location = "mailto:derrimughisha@gmail.com")
+                      }
+                    >
+                      <AiFillMail />
                     </SocialIcons>
                   </SocialIconsContainer>
                 </MentorInfo>

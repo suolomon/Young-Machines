@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import { Link } from "react-router-dom";
 export const InfoContainer = styled.div`
  color: #fff;
  background: ${({ lightBg}) => (lightBg ? '#f7f8fa' : 'white')};

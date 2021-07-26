@@ -34,26 +34,32 @@ const HeroSection = () => {
               typewriter
                 .typeString("We teach you to solve")
                 .pauseFor(2000)
-                .deleteChars(5)
-              typewriter.typeString("develope").pauseFor(2000)
-              .deleteChars(11)
-              .typeString('the future').pauseFor(1000).start()
+                .deleteChars(5);
+              typewriter
+                .typeString("develope")
+                .pauseFor(2000)
+                .deleteChars(11)
+                .typeString("the future")
+                .pauseFor(1000)
+                .start();
             }}
             options={{
               autoStart: true,
-              // loop: true, 
-      
             }}
-          
           />
         </HeroH1>
         <HeroP>
-          Our robust community gives you the skill sets you need in
-          software development. 
+          Our robust community gives you the skill sets you need in software
+          development.
         </HeroP>
         <HeroBtnWrapper>
           <StartButton
-            to="/contact"
+            onClick={() =>
+              window.open(
+                "https://drive.google.com/file/d/1DSqEqRbJV2d2Sk1sIrveMr1-o5XMrfOM/view?usp=sharing",
+                "_blank"
+              )
+            }
             onMouseEnter={onHover}
             onMouseLeave={onHover}
             primary="true"
