@@ -56,7 +56,7 @@ const HeroSection = () => {
           <StartButton
             onClick={() =>
               window.open(
-                "https://drive.google.com/file/d/1DSqEqRbJV2d2Sk1sIrveMr1-o5XMrfOM/view?usp=sharing",
+                "https://drive.google.com/file/d/1a-VlzRKLMjTRZ_4Mz3PIozbNjV8bQLui/view?usp=sharing",
                 "_blank"
               )
             }

@@ -42,7 +42,7 @@ const InfoSection = ({
                     <Button
                       onClick={() =>
                         window.open(
-                          "https://drive.google.com/file/d/1FLjCJlgdVof_DT1fr1jv3jG58o0s7xdD/view?usp=sharing",
+                          "https://drive.google.com/file/d/1gAkiz0ck7s5_5dF5hHtnvMA1MFT3NUqt/view?usp=sharing",
                           "_blank"
                         )
                       }
